@@ -1,12 +1,17 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"bubble/conf"
+	"fmt"
+	"github.com/jinzhu/gorm"
+)
 
 var DB *gorm.DB
 
 // 初始化数据库
-func InitPg() {
-	dsn := "host=172.30.0.56 port=5432 user=postgres dbname=bubble password=postgres sslmode=disable"
+func InitPg(dbConf *conf.DbConf) {
+	dsn := "host=" + dbConf.Host + " port=" + dbConf.Port + " user=" + dbConf.Username + " dbname=" + dbConf.DbName + " password=" + dbConf.Password + " sslmode=disable"
+	fmt.Println(dsn)
 	var openErr error
 	DB, openErr = gorm.Open("postgres", dsn)
 	if openErr != nil {

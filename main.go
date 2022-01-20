@@ -2,6 +2,7 @@ package main
 
 import (
 	"bubble/api"
+	"bubble/conf"
 	"bubble/model"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -19,8 +20,11 @@ func InitGin() *gin.Engine {
 }
 
 func main() {
+	// 获取基础配置
+	var dbConf conf.DbConf
+	dbData := dbConf.GetDbConf()
 	// 初始化数据库
-	model.InitPg()
+	model.InitPg(dbData)
 	// 程序关闭退出数据库连接
 	defer model.DB.Close()
 
